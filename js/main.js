@@ -1,4 +1,31 @@
-//------------------- Trabajo Entregable N°1 --------------------//                   
+//------------------- Trabajo Entregable N°2 --------------------//      
+
+// *************************************************************//
+// *********************    constructor    *********************//
+// *************************************************************//
+class Producto {
+    constructor(id, nombre, precio, stock) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = parseInt(precio);
+        this.stock = stock
+    }
+}
+
+// *************************************************************//
+// **********************    Producto    ***********************//
+// *************************************************************//
+const productos = [
+    { id: 0, categoria: 'Mouse', nombre: 'Mouse HyperX', precio: 4000, stock: 10 },
+    { id: 1, categoria: 'Mouse', nombre: 'Mouse Logitech', precio: 7500, stock: 10 },
+    { id: 2, categoria: 'Mouse', nombre: 'Mouse Redragon', precio: 5000, stock: 10 },
+    { id: 3, categoria: 'Mouse Pad', nombre: 'Mouse Pad HyperX', precio: 1200, stock: 20 },
+    { id: 4, categoria: 'Mouse Pad', nombre: 'Mouse Pad Logitech', precio: 2500, stock: 20 },
+    { id: 5, categoria: 'Mouse Pad', nombre: 'Mouse Pad Redragon', precio: 2250, stock: 20 },
+    { id: 6, categoria: 'Teclado', nombre: 'Teclado HyperX', precio: 4800, stock: 10 },
+    { id: 7, categoria: 'Teclado', nombre: 'Teclado Logitech', precio: 6000, stock: 10 },
+    { id: 8, categoria: 'Teclado', nombre: 'Teclado Redragon', precio: 8000, stock: 10 },
+]
 
 // *************************************************************//
 // *********************    Variables    ***********************//
@@ -6,23 +33,22 @@
 const tuCarrito = [];
 let compra;
 let total = 0;
-let cantidadTotal = 0;
 let editor;
-let stockProducto;
 
 // **************************************************************//
 // *********************     Functions     **********************//
 // **************************************************************//
 
-const validarStock = (nombre, stock, precio, cantidadPedida,) => {
-    stockProducto = (stock - cantidadPedida)
+const validarStock = (nombre, stock, precio, cantidadPedida, id) => {
+    const searchProduct = productos.find(busqueda => busqueda.id == id)
+    const stockProducto = (searchProduct.stock - cantidadPedida)
+    searchProduct.stock = stockProducto
     if (stockProducto < stock) {
-        console.log(`Tenemos Stock, nos quedan ${stock}`)
+        console.log(`Tenemos Stock, nos quedan ${stockProducto}`)
         total += (precio * cantidadPedida)
         console.log(`Agregaste al Carrito ${nombre} por $${precio} \n total = $${total}`)
         id = tuCarrito.length
-        tuCarrito.push(new Producto(nombre, precio, id))
-        return stockProducto
+        tuCarrito.push(new Producto(id, nombre, precio, cantidadPedida))
     }
     else {
         alert('No tenemos stock suficente para tu pedido \n por favor seleccione menos cantidad')
@@ -30,10 +56,10 @@ const validarStock = (nombre, stock, precio, cantidadPedida,) => {
         stock += cantidadPedida
     }
 }
-
-const resumenProducto = (nombre1, precio1, stock1,
-    nombre2, precio2, stock2,
-    nombre3, precio3, stock3) => {
+console.log(tuCarrito)
+const resumenProducto = (nombre1, precio1, stock1, id1,
+    nombre2, precio2, stock2, id2,
+    nombre3, precio3, stock3, id3) => {
     const productoSeleccionado = parseInt(prompt(`
     selecciona el numero que desea agregar al carrito...
     1- ${nombre1} $${precio1}
@@ -42,21 +68,21 @@ const resumenProducto = (nombre1, precio1, stock1,
     switch (productoSeleccionado) {
         case 1:
             let cantidadPedida0 = 1
-            validarStock(nombre1, stock1, precio1, cantidadPedida0)
+            validarStock(nombre1, stock1, precio1, cantidadPedida0, id1)
             break;
         case 2:
             let cantidadPedida1 = 1
-            validarStock(nombre2, stock2, precio2, cantidadPedida1)
+            validarStock(nombre2, stock2, precio2, cantidadPedida1, id2)
             break;
         case 3:
             let cantidadPedida2 = 1
-            validarStock(nombre3, stock3, precio3, cantidadPedida2)
+            validarStock(nombre3, stock3, precio3, cantidadPedida2, id3)
             break;
         default:
             alert(`Numero Ingresado Incorrecto`)
     }
 }
-const eliminar =(nombre) => {
+const eliminar = (nombre) => {
     let index = tuCarrito[nombre]
     if (index != -1) {
         console.log(`sacaste ${tuCarrito[nombre].nombre} de $${tuCarrito[nombre].precio}
@@ -89,32 +115,6 @@ else {
     alert('dato inncorrecto')
 }
 
-// *************************************************************//
-// *********************    constructor    *********************//
-// *************************************************************//
-class Producto {
-    constructor(nombre, precio) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = parseInt(precio);
-        this.stock = stock;
-    }
-}
-
-// *************************************************************//
-// **********************    Producto    ***********************//
-// *************************************************************//
-const productos = [
-    { id: 0, categoria: 'Mouse', nombre: 'Mouse HyperX', precio: 4000, stock: 10 },
-    { id: 1, categoria: 'Mouse', nombre: 'Mouse Logitech', precio: 7500, stock: 10 },
-    { id: 2, categoria: 'Mouse', nombre: 'Mouse Redragon', precio: 5000, stock: 10 },
-    { id: 3, categoria: 'Mouse Pad', nombre: 'Mouse Pad HyperX', precio: 1200, stock: 20 },
-    { id: 4, categoria: 'Mouse Pad', nombre: 'Mouse Pad Logitech', precio: 2500, stock: 20 },
-    { id: 5, categoria: 'Mouse Pad', nombre: 'Mouse Pad Redragon', precio: 2250, stock: 20 },
-    { id: 6, categoria: 'Teclado', nombre: 'Teclado HyperX', precio: 4800, stock: 10 },
-    { id: 7, categoria: 'Teclado', nombre: 'Teclado Logitech', precio: 6000, stock: 10 },
-    { id: 8, categoria: 'Teclado', nombre: 'Teclado Redragon', precio: 8000, stock: 10 },
-]
 
 do {
     const categoriaSeleccionada = prompt(
@@ -124,19 +124,19 @@ do {
         3- Teclado`)
     switch (categoriaSeleccionada) {
         case '1':
-            resumenProducto(productos[0].nombre, productos[0].precio, productos[0].stock,
-                productos[1].nombre, productos[1].precio, productos[1].stock,
-                productos[2].nombre, productos[2].precio, productos[2].stock)
+            resumenProducto(productos[0].nombre, productos[0].precio, productos[0].stock, productos[0].id,
+                productos[1].nombre, productos[1].precio, productos[1].stock, productos[1].id,
+                productos[2].nombre, productos[2].precio, productos[2].stock, productos[2].id,)
             break;
         case '2':
-            resumenProducto(productos[3].nombre, productos[3].precio, productos[3].stock,
-                productos[4].nombre, productos[4].precio, productos[4].stock,
-                productos[5].nombre, productos[5].precio, productos[5].stock)
+            resumenProducto(productos[3].nombre, productos[3].precio, productos[3].stock, productos[3].id,
+                productos[4].nombre, productos[4].precio, productos[4].stock, productos[4].id,
+                productos[5].nombre, productos[5].precio, productos[5].stock, productos[5].id)
             break;
         case '3':
-            resumenProducto(productos[6].nombre, productos[6].precio, productos[6].stock,
-                productos[7].nombre, productos[7].precio, productos[7].stock,
-                productos[8].nombre, productos[8].precio, productos[8].stock)
+            resumenProducto(productos[6].nombre, productos[6].precio, productos[6].stock, productos[6].id,
+                productos[7].nombre, productos[7].precio, productos[7].stock, productos[7].id,
+                productos[8].nombre, productos[8].precio, productos[8].stock, productos[8].id)
             break;
         default:
             alert('Numero Ingresado Incorrecto')
@@ -165,5 +165,5 @@ do {
     }
 } while (editor !== 'n')
 
-    alert('Gracias Por la Compra')
-    console.log(tuCarrito)
+alert('Gracias Por la Compra')
+console.log(tuCarrito)
